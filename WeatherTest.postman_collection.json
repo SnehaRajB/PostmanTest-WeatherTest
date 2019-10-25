@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "7e672461-275a-4ae6-867d-e3b2715af3dd",
+		"name": "WeatherTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "WeatherTest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4985bca3-1615-49af-8a0e-09bc0ed40860",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check if response contains all the fields in array\", function () {",
+							"     pm.expect({title: 1, location_type: 2,woeid: 3, latt_long :4 }).to.be.an('object').that.has.all.keys('title', 'location_type','woeid', 'latt_long');",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.metaweather.com/api/location/search/?query=man",
+					"protocol": "https",
+					"host": [
+						"www",
+						"metaweather",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "man"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WoID Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f32522d-f9b0-4cb2-82b3-8ec3c0064474",
+						"exec": [
+							"pm.test(\"Check body, ids and applicable dates, weather_state_name not null \", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.consolidated_weather).to.be.an(\"array\").and.to.have.lengthOf(6);",
+							"    pm.expect(jsonData.consolidated_weather[0].applicable_date).have.to.be.a(\"today date\");",
+							"  // pm.expect(jsonData.Offer.Product[0].Rate[0].rate_id).to.be.a(\"number\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.metaweather.com/api/location/44418/",
+					"protocol": "https",
+					"host": [
+						"www",
+						"metaweather",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"44418",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Date-Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.metaweather.com/api/location/44418/2019/10/24",
+					"protocol": "https",
+					"host": [
+						"www",
+						"metaweather",
+						"com"
+					],
+					"path": [
+						"api",
+						"location",
+						"44418",
+						"2019",
+						"10",
+						"24"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
